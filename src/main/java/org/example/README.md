@@ -10,25 +10,23 @@ The program finds all occurrences of a pattern inside a text and demonstrates th
 
 We want to find a pattern `P` of length `m` in a text `T` of length `n`. The naive algorithm may compare the same characters many times and in the worst case works in `O(n * m)` time.
 
-KMP avoids this by preprocessing the pattern. It builds an array `lps` (“longest proper prefix which is also suffix”). For each position `i` in the pattern, `lps[i]` stores the length of the longest prefix of `P` that is also a suffix of `P[0..i]`.  
+KMP avoids this by preprocessing the pattern. It builds an array `lps` (“longest proper prefix which is also suffix”). For each position `i` in the pattern, `lps[i]` stores the length of the longest prefix of `P` that is also a suffix of `P[0..i]`.
 
 During the search, when a mismatch happens after some characters matched, we do not go back in the text. Instead, we move the pattern index according to `lps` and continue the comparison. This way every character of the text is processed only a constant number of times.
 
-### 3. Implementation ([KMP.java](cci:7://file:///c:/Users/yadis/IdeaProjects/untitled6/src/main/java/org/example/KMP.java:0:0-0:0))
+### 3. Implementation (KMP.java).
 
-All code is in [KMP.java](cci:7://file:///c:/Users/yadis/IdeaProjects/untitled6/src/main/java/org/example/KMP.java:0:0-0:0) (package `org.example`).
-
-- [buildLps(String pattern)](cci:1://file:///c:/Users/yadis/IdeaProjects/untitled6/src/main/java/org/example/KMP.java:9:4-29:5)  
+- buildLps
   Builds the `lps` array in one pass over the pattern using two indices: current position `i` and current prefix–suffix length `len`.
 
-- [searchAll(String text, String pattern)](cci:1://file:///c:/Users/yadis/IdeaProjects/untitled6/src/main/java/org/example/KMP.java:11:4-44:5)  
+- searchAll  
   Uses KMP to find **all** occurrences of the pattern in the text. It returns a list of starting indices. Two indices are used: `i` for the text and `j` for the pattern. On match, both move forward; when `j` reaches `m`, we store `i - j` as a match and update `j` via `lps`. On mismatch, `j` either moves back using `lps`, or we advance `i` if nothing matches.
-
-- [positionsToString(List<Integer> pos)](cci:1://file:///c:/Users/yadis/IdeaProjects/untitled6/src/main/java/org/example/KMP.java:46:4-58:5)  
+  
+- positionsToString(List<Integer> pos)
   Converts the list of indices to a comma‑separated string (or `"No occurrences"` if the list is empty).
 
-- [main(String[] args)](cci:1://file:///c:/Users/yadis/IdeaProjects/untitled6/src/main/java/org/example/Main.java:8:4-40:39)  
-  Creates three test examples and writes formatted results to `src/main/java/org/example/output.txt` using `FileWriter` and `PrintWriter`.
+- main  
+  Creates three test examples and writes formatted results to `output.txt` using `FileWriter` and `PrintWriter`.
 
 ### 4. Test cases
 
@@ -51,12 +49,12 @@ All results are written to `output.txt`, which can be opened after the program f
 
 The complexity of KMP can be divided into two parts:
 
-- **Preprocessing ([buildLps](cci:1://file:///c:/Users/yadis/IdeaProjects/untitled6/src/main/java/org/example/KMP.java:9:4-29:5))** – the pattern is processed once.  
+- **Preprocessing** – the pattern is processed once.  
   Time: `O(m)`  
   Memory: `O(m)` for the `lps` array.
 
-- **Search ([searchAll](cci:1://file:///c:/Users/yadis/IdeaProjects/untitled6/src/main/java/org/example/KMP.java:11:4-44:5))** – we scan the text without moving the text index backwards.  
-  Time: `O(n)`  
+- **Search** – we scan the text without moving the text index backwards.  
+  Time: `O(n)`
 
 So the overall time complexity of this implementation is **`O(n + m)`**, which is better than the naive **`O(n * m)`**. The extra memory usage is **`O(m)`**.
 
