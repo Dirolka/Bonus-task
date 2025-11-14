@@ -1,0 +1,15 @@
+Test 1
+Text:    uhozhusdfauuhozhus
+Pattern: uhozhu
+Positions: 0, 11
+
+Test 2
+Text:    gffggggfgfggggfggg
+Pattern: fggg
+Positions: 2, 9, 14
+
+Test 3
+Text length: 8000
+Pattern: cab
+Number of occurrences: 0
+
